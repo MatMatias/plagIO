@@ -1,4 +1,4 @@
 .git
 pancorpus/train/*
 plag_train.db
-
+src/__pycache__/
