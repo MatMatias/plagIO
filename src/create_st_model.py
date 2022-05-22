@@ -61,8 +61,8 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    pandb = PanDatabaseManager()
-    ids, sentences = pandb.get_ids_and_contents_of_sentences(args.source)
+    pandb = PanDatabaseManager("plag_train.db")
+    ids, sentences = pandb.get_ids_and_contents_of_sentences()
 
     vocab_processor = get_vocab_processor(sentences, MAX_SENTENCE_LEN)
 
