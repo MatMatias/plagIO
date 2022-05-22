@@ -1,7 +1,7 @@
 import torch
 from torch.autograd import Variable
 from torch.nn import CosineSimilarity
-import sys
+import sys, os
 import numpy as np
 sys.path.append('skip-thoughts.torch/pytorch')
 from skipthoughts import UniSkip
@@ -10,11 +10,6 @@ import argparse
 from pan_db import PanDatabaseManager
 import pickle
 from tensorflow.contrib import learn
-
-def get_vocab_processor(sentences, max_document_length):
-    vocab_processor = learn.preprocessing.VocabularyProcessor(max_document_length, min_frequency=0)
-    vocab_processor.fit_transform(sentences)
-    return vocab_processor
 
 # Print iterations progress
 # source: https://stackoverflow.com/questions/3173320/text-progress-bar-in-the-console
@@ -39,82 +34,94 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
     if iteration == total: 
         print()
 
-if __name__ == '__main__':
-    BATCH_SIZE = 512
-    MAX_SENTENCE_LEN = 15
+def get_vocab_processor(sentences, max_document_length, min_freq):
+    vocab_processor = learn.preprocessing.VocabularyProcessor(max_document_length, min_frequency=min_freq)
+    vocab_processor.fit_transform(sentences)
+    return vocab_processor
 
-    parser = argparse.ArgumentParser(description='Generates Skip-Thought vectors for sentences.')
+def main():
+    BATCH_SIZE = 512
+
+    parser = argparse.ArgumentParser(description='Generates SkipThouth vectors for sentences from the PAN corpus.')
     parser.add_argument(
-        "--source", 
-        help = 'specify which part of the PAN corpus will provide the input sentences', 
-        type=str, 
-        choices={"train", "test"}, 
+        "--pandb", 
+        help = 'specify the sqlite PAN database file containing the input sentences', 
         required=True)
     parser.add_argument(
         '--debug',
         action='store_true', 
         help='print debug messages to stderr')
     parser.add_argument(
-        '--dest', 
+        '--stdir', 
+        help = 'directory containing the SkipThougths model', 
+        required = True)
+    parser.add_argument(
+        '--vocab', 
+        help = 'name of the text file holding the vocabulary', 
+        required = True)
+    parser.add_argument(
+        '--destdir', 
         help = 'destination directory for the sentence vectors to be generated', 
+        required = True)
+    parser.add_argument(
+        '--start', 
+        type=int,
+        help = 'doc id at which the processing should start', 
         required = True)
 
     args = parser.parse_args()
 
-    pandb = PanDatabaseManager("plag_train.db")
-    ids, sentences = pandb.get_ids_and_contents_of_sentences()
+    pandb = PanDatabaseManager(args.pandb)
+    sentences = pandb.get_sentence_texts()
+    print("Amount of sentences to be processed: ", len(sentences))
 
-    vocab_processor = get_vocab_processor(sentences, MAX_SENTENCE_LEN)
+    vocabulary = [line.rstrip('\n') for line in open(args.vocab)]
 
-    print("Amount of sentence ids: ", len(ids))
-    print("Amount of sentences: ", len(sentences))
-    print("Vocabulary length = {}".format(len(vocab_processor.vocabulary_)))
+    print("Size of vocabulary: ", len(vocabulary))
 
-    ## Extract 'word --> id' mapping from the object.
-    vocab_dict = vocab_processor.vocabulary_._mapping
+    # NB: model will be created if it is not found in the given directory.
+    print("Loading skip-thoughts model...")
+    uniskip = UniSkip(args.stdir, vocabulary)
 
-    sorted_vocab = sorted(vocab_dict.items(), key = lambda x : x[1])
+    vocab_processor = get_vocab_processor(sentences, 30, 3)
 
-    ## Treat the ids as indices into list and create a list of words in the ascending order of ids,
-    ## in such a way that word with id i goes at index i of the list.
-    vocabulary = list(list(zip(*sorted_vocab))[0])
+    ids_for_docs = pandb.get_ids_for_documents()
 
-    if args.debug:
-        print("Vocabulary len: ", len(vocabulary))
+    printProgressBar(0, len(ids_for_docs), prefix = 'Progress:', suffix = 'Complete', length = 50)
+    for doc_id in ids_for_docs:
 
-    dir_st = args.dest
+        if doc_id < args.start:
+            continue
 
-    print("Creating skip-thoughts model...")
-    uniskip = UniSkip(dir_st, vocabulary)
+        sentences = pandb.get_sentences_texts_for_doc(doc_id)
+        l = len(sentences)
 
-    print("Creating input to skip-thoughts model...")
-    a_list = list(vocab_processor.fit_transform(sentences))
-    print("List size: ", len(a_list))
-    x = np.array(a_list)
+        if l > 5000:
+            print("Skipping doc %d because it is too large (%d sentences)." % (doc_id, l))
+            continue
 
-    l = len(sentences)
-    print("Dumping sentence vectors to pickle files into directory <%s>..." % dir_st)
-    printProgressBar(0, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
-    offset = 0
-    nb_gen_vectors = 0
-    i = 0
-    while nb_gen_vectors < len(a_list):
-        BATCH_SIZE = len(a_list) - offset if offset + BATCH_SIZE > len(a_list) else BATCH_SIZE
-        input = Variable(torch.LongTensor(x[offset:BATCH_SIZE+offset]))
-        offset = offset + BATCH_SIZE
+        a_list = list(vocab_processor.fit_transform(sentences))
+        x = np.array(a_list)
 
-        #Applying skip-thoughts model to sentences...
-        # output_seq2vec.size() --> [512, 2400]
-        # output_seq2vec.size(0) --> 512
+        batch_size = l
+        input = Variable(torch.LongTensor(x))
         output_seq2vec = uniskip(input)
 
         #Saving batch of sentence embeddings to pickle file...
-        dbfile = open('st-vectors' + "{:011d}".format(i) + '.pkl', 'wb')
+        pkl_filename = os.path.join(args.destdir, "stvecs{:05d}.pkl".format(doc_id))
+
+        print("Dumping %d sentence vectors for doc %d." % (l, doc_id))
+        dbfile = open(pkl_filename, 'wb')
         pickle.dump(output_seq2vec, dbfile)
         dbfile.close()
-        i = i + 1    
-        nb_gen_vectors = nb_gen_vectors + BATCH_SIZE
 
-        printProgressBar(i + 1, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
+        printProgressBar(doc_id, len(ids_for_docs), prefix = 'Progress:', suffix = 'Complete', length = 50)
 
     print("Done!")
+
+'''
+    Execution example:
+        python gen_stvecs_for_docs.py --pandb plag_train.db --stdir ./stdir --destdir ./stvecs_by_doc --vocab vocabulary.txt
+'''
+if __name__ == '__main__':
+    main()
