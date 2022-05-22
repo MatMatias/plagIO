@@ -14,9 +14,23 @@ class PanDatabaseManager(object):
         self.cur = db.cursor()
 
     def get_sentences_metadata(self):
-        sentences_ids, article_ids, author_ids, isplag_flags = map(
-            list, zip(*get_sentences())
-        )
+        sentences = self.get_sentences()
+
+        sentences_ids = []
+        article_ids = []
+        author_ids = []
+        isplag_flags = []
+
+        for sentence in sentences:
+            sentences_ids.append(sentence[0])
+            article_ids.append(sentence[1])
+            author_ids.append(sentence[2])
+            isplag_flags.append(sentence[2])
+
+        # sentences_ids, article_ids, author_ids, isplag_flags = map(
+        #     list, zip(self.get_sentences())
+        # )
+
         return sentences_ids, article_ids, author_ids, isplag_flags
 
     def get_ids_for_documents(self):

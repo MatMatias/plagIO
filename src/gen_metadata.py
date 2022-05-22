@@ -7,18 +7,18 @@ from itertools import islice
 from pan_db import PanDatabaseManager
 
 def load_metadata():
-    dbfile = open('../pkl/metadata.pkl', 'rb')
+    dbfile = open('../data/pkl/metadata.pkl', 'rb')
     metadata = pickle.load(dbfile)
     return metadata
 
 if __name__ == "__main__":
-    pandb = PanDatabaseManager()
+    pandb = PanDatabaseManager("plag_train.db")
     sentences_ids, article_ids, author_ids, isplag_flags = pandb.get_sentences_metadata()
 
     print("Amount of sentence ids: ", len(sentences_ids))
 
     #Saving metadata to pickle file...
-    dbfile = open('../pkl/metadata.pkl', 'wb')
+    dbfile = open('../data/pkl/metadata.pkl', 'wb')
     metadata_dict = {'sentences_ids': sentences_ids, 'article_ids': article_ids, 'author_ids': author_ids, 'isplag_flags': isplag_flags}
     pickle.dump(metadata_dict, dbfile)
     dbfile.close()
