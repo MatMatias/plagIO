@@ -23,4 +23,7 @@ Plagiarism identifier
 ### Criar modelo skipthoughts:
 	- pip install skipthoughts
 	- pip install tensorflow==1.13.2
-	- python src/create_st_model.py --source train --dest ./
+	- cd data/skip-thoughts
+	- wget http://www.cs.toronto.edu/~rkiros/models/uni_skip.npz http://www.cs.toronto.edu/~rkiros/models/uni_skip.npz.pkl http://www.cs.toronto.edu/~rkiros/models/bi_skip.npz http://www.cs.toronto.edu/~rkiros/models/bi_skip.npz.pk
+	- cd ../..
+	- python ./src/gen_stvecs_for_docs.py --pandb plag_train.db --stdir ./data/skip-thoughts --destdir ./data --vocab ./data/skip-thoughts/dictionary.txt --start 1
