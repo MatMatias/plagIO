@@ -6,7 +6,7 @@ import argparse, os
 
 # carrega o arquivo com metadados ordenados por author_ids, isplag_flags, sentences_ids
 def load_metadata():
-    dbfile = open('../pkl/metadata.pkl', 'rb')
+    dbfile = open('./data/pkl/metadata.pkl', 'rb')
     metadata = pickle.load(dbfile)
     return metadata
 

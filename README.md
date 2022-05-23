@@ -31,3 +31,6 @@ Plagiarism identifier
 ### Gerar metadados:
   - pip install numpy scipy matplotlib ipython jupyter pandas sympy nose 
   - python ./src/gen_metadata.py
+
+### Gerar tuplas:
+  - python ./src/gen_tuples.py --destdir ./data/tuples
