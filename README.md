@@ -34,3 +34,4 @@ Plagiarism identifier
 
 ### Gerar tuplas:
   - python ./src/gen_tuples.py --destdir ./data/tuples
+  .
