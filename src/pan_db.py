@@ -25,7 +25,7 @@ class PanDatabaseManager(object):
             sentences_ids.append(sentence[0])
             article_ids.append(sentence[1])
             author_ids.append(sentence[2])
-            isplag_flags.append(sentence[2])
+            isplag_flags.append(sentence[3])
 
         # sentences_ids, article_ids, author_ids, isplag_flags = map(
         #     list, zip(self.get_sentences())
