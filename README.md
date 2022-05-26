@@ -15,7 +15,7 @@ Plagiarism identifier
 	- python ./src/gen_pandb_train.py --srcdir ./pancorpus/train --destfile ./plag_train.db
 
 ### Criar modelo skipthoughts:
-	- python ./src/create_st_model.py --pandb plag_train.db --stdir ./data/skip-thoughts/ --destdir ./data/pkl --vocab ./data/skip-thoughts/dictionary.txt --start 1
+	- python ./src/create_st_model.py --pandb plag_train.db --stdir ./data/skip-thoughts/ --destdir ./data/pkl --vocab ./data/skip-thoughts/dictionary.txt --start 4000 --maxsen 300
 
 ### Gerar metadados:
   - python ./src/gen_metadata.py

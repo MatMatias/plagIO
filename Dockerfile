@@ -13,4 +13,4 @@ RUN pip install numpy scipy matplotlib ipython jupyter pandas sympy nose
 # RUN pip uninstall protobuf
 RUN pip install protobuf==3.20.1
 RUN python -m nltk.downloader punkt
-RUN mkdir data/tuples
+# RUN mkdir data/tuples
