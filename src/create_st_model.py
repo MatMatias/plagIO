@@ -41,6 +41,7 @@ def get_vocab_processor(sentences, max_document_length, min_freq):
 
 def main():
     BATCH_SIZE = 512
+    MAX_SENTENCES = 300
 
     parser = argparse.ArgumentParser(description='Generates SkipThouth vectors for sentences from the PAN corpus.')
     parser.add_argument(
@@ -68,6 +69,10 @@ def main():
         type=int,
         help = 'doc id at which the processing should start', 
         required = True)
+    parser.add_argument(
+        '--maxsen', 
+        type=int,
+        help = 'doc id at which the processing should start')
 
     args = parser.parse_args()
 
@@ -96,7 +101,10 @@ def main():
         sentences = pandb.get_sentences_texts_for_doc(doc_id)
         l = len(sentences)
 
-        if l > 5000:
+        if args.maxsen:
+            MAX_SENTENCES = args.maxsen
+
+        if l > MAX_SENTENCES:
             print("Skipping doc %d because it is too large (%d sentences)." % (doc_id, l))
             continue
 
