@@ -4,4 +4,4 @@ pancorpus/train/*
 plag_train.db
 src/__pycache__/
 data/pkl/*
-data/skip-thoughts/*
+data/skipthoughts/*
