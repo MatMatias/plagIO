@@ -1,4 +1,4 @@
-FROM bitnami/pytorch:latest
+FROM bitnami/pytorch:1.10.1
 LABEL authors="SamuraX <https://github.com/MatMatias>"
 USER root
 WORKDIR /app
@@ -10,6 +10,7 @@ RUN apt-get -y install sqlite3
 RUN apt-get -y install wget 
 RUN pip install nltk
 RUN pip install skipthoughts
+RUN pip install certifi==2022.5.18.1
 RUN pip install tensorflow==1.13.2
 RUN pip install numpy scipy matplotlib ipython jupyter pandas sympy nose 
 RUN pip install protobuf==3.20.1

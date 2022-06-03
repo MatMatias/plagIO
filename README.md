@@ -31,4 +31,4 @@ Plagiarism identifier
   - python ./src/gen_metadata.py
 
 ### Gerar tuplas:
-  - python ./src/gen_tuples.py --destdir ./data/tuples
+  - python ./src/gen_tuples.py --destdir ./data/triples
