@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import styles from "@/styles/Home.module.css";
+import { Header } from "@/components/header";
 
 const Home: NextPage = () => {
   return (
@@ -11,7 +12,7 @@ const Home: NextPage = () => {
         <meta name="description" content="plagon" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header>Plagon</header>
+      <Header />
       <div>
         <h1>Verificador de plágio</h1>
         <h3>Copie e cole ou faça upload do seu texto.</h3>
