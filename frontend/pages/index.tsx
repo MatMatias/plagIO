@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
-import { Header } from "@/components/header";
+import { Header, UploadArea } from "@/components/index";
 
 const Home: NextPage = () => {
   return (
@@ -10,21 +10,16 @@ const Home: NextPage = () => {
       <Head>
         <title>Plagon</title>
         <meta name="description" content="plagon" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <div>
-        <h1>Verificador de plágio</h1>
-        <h3>Copie e cole ou faça upload do seu texto.</h3>
-      </div>
-      <span>total de chars</span>
-      <main className={styles.main}>
-        <textarea placeholder="Insira aqui o texto para verificar o plágio">
-          Plagon
-        </textarea>
-        <div>
-          <p>Upload</p>
-          <button>Verifique o plágio</button>
+      <section className={styles.title}>
+        <h1 className={styles.h1}>Verificador de plágio</h1>
+      </section>
+      <main>
+        <div className={styles.uploadArea}>
+          <UploadArea />
         </div>
       </main>
     </div>
