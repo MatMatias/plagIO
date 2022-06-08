@@ -6,10 +6,10 @@
 
 html,
 body {
-  padding: 0;
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
@@ -34,28 +34,32 @@ a {
 }
 
 .primary-button {
-  border-style: solid;
-  border-color: var(--primary);
   background-color: var(--primary);
+  border-color: var(--primary);
+  border-style: solid;
   color: var(--secondary);
-  padding: 0.5rem;
   font-weight: bold;
+  padding: 0.5rem;
 }
 
 .secondary-button {
-  border-style: solid;
-  border-color: var(--primary);
   background-color: var(--secondary);
+  border-color: var(--primary);
+  border-style: solid;
   color: var(--primary);
-  padding: 0.5rem;
   font-weight: bold;
+  padding: 0.5rem;
 }
 
 .disabled-button {
-  border-style: solid;
-  border-color: var(--disabled);
   background-color: var(--disabled);
+  border-color: var(--disabled);
+  border-style: solid;
   color: var(--primary);
+  font-weight: bold;
   padding: 0.5rem;
+}
+
+.text-bold {
   font-weight: bold;
 }

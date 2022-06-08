@@ -1,35 +1,39 @@
-import { useCallback, useState, useEffect } from "react";
-import { FileRejection, useDropzone } from "react-dropzone";
 import styles from "@/styles/Dropzone.module.css";
+import { FileRejection, useDropzone } from "react-dropzone";
+import { HomeContext } from "@/contexts/index";
+import { IconContext } from "react-icons";
+import { ImFileText } from "react-icons/im";
 import { getErrorMessages, getErrorCodesSet } from "./utils";
+import { useCallback, useEffect, useContext, Fragment } from "react";
 
 const Dropzone = () => {
-  const [errorMessages, setErrorMessages] = useState<string[] | undefined>(
-    undefined
+  const { errorMessages, setErrorMessages, file, setFile } =
+    useContext(HomeContext);
+
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      setFile(acceptedFiles[0]);
+    },
+    [setFile]
   );
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {}, []);
-
-  const onDropRejected = useCallback((fileRejections: FileRejection[]) => {
-    const errorCodesSet = getErrorCodesSet(fileRejections);
-    setErrorMessages(getErrorMessages(errorCodesSet));
-    console.log(fileRejections);
-  }, []);
+  const onDropRejected = useCallback(
+    (fileRejections: FileRejection[]) => {
+      const errorCodesSet = getErrorCodesSet(fileRejections);
+      setErrorMessages(getErrorMessages(errorCodesSet));
+      console.log(fileRejections);
+    },
+    [setErrorMessages]
+  );
 
   useEffect(() => {
     if (errorMessages) {
       alert(errorMessages.join("\n"));
       setErrorMessages(undefined);
     }
-  }, [errorMessages]);
+  }, [errorMessages, setErrorMessages]);
 
-  const {
-    acceptedFiles,
-    fileRejections,
-    getRootProps,
-    getInputProps,
-    isDragActive,
-  } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     onDropRejected,
     accept: {
@@ -41,10 +45,23 @@ const Dropzone = () => {
   return (
     <div {...getRootProps()} className={styles.container}>
       <input {...getInputProps()} />
-      {isDragActive ? (
-        <p>Solte o arquivo aqui</p>
+      {file ? (
+        <div className={styles.dropzoneTextContainer}>
+          <IconContext.Provider value={{ size: "1.5rem" }}>
+            <div className={styles.iconContainer}>
+              <ImFileText />
+            </div>
+          </IconContext.Provider>
+          <p className="text-bold">{file.name}</p>
+        </div>
       ) : (
-        <p>Arraste o arquivo, ou clique para selecionar</p>
+        <Fragment>
+          {isDragActive ? (
+            <p>Solte o arquivo aqui</p>
+          ) : (
+            <p>Arraste o arquivo, ou clique para selecionar</p>
+          )}
+        </Fragment>
       )}
     </div>
   );
