@@ -1,3 +1,9 @@
+:root {
+  --primary: rgb(0, 0, 0);
+  --secondary: rgb(255, 255, 255);
+  --disabled: rgb(130, 130, 130);
+}
+
 html,
 body {
   padding: 0;
@@ -25,4 +31,31 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.primary-button {
+  border-style: solid;
+  border-color: var(--primary);
+  background-color: var(--primary);
+  color: var(--secondary);
+  padding: 0.5rem;
+  font-weight: bold;
+}
+
+.secondary-button {
+  border-style: solid;
+  border-color: var(--primary);
+  background-color: var(--secondary);
+  color: var(--primary);
+  padding: 0.5rem;
+  font-weight: bold;
+}
+
+.disabled-button {
+  border-style: solid;
+  border-color: var(--disabled);
+  background-color: var(--disabled);
+  color: var(--primary);
+  padding: 0.5rem;
+  font-weight: bold;
 }

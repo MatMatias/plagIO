@@ -7,6 +7,7 @@ const Dropzone = () => {
   const [errorMessages, setErrorMessages] = useState<string[] | undefined>(
     undefined
   );
+
   const onDrop = useCallback((acceptedFiles: File[]) => {}, []);
 
   const onDropRejected = useCallback((fileRejections: FileRejection[]) => {
