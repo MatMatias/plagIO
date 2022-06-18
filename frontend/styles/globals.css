@@ -38,6 +38,7 @@ a {
   border-color: var(--primary);
   border-style: solid;
   color: var(--secondary);
+  cursor: pointer;
   font-weight: bold;
   padding: 0.5rem;
 }
@@ -47,6 +48,7 @@ a {
   border-color: var(--primary);
   border-style: solid;
   color: var(--primary);
+  cursor: pointer;
   font-weight: bold;
   padding: 0.5rem;
 }
@@ -56,6 +58,7 @@ a {
   border-color: var(--disabled);
   border-style: solid;
   color: var(--primary);
+  cursor: not-allowed;
   font-weight: bold;
   padding: 0.5rem;
 }
