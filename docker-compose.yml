@@ -1,5 +1,5 @@
 services:
-  plagon:
+  plagio:
     build:
       dockerfile: Dockerfile
       context: .

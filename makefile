@@ -1,5 +1,5 @@
 SHELL := /bin/bash
 build:
-	docker-compose build plagon
+	docker-compose build plagio
 dev:
-	docker-compose run --rm plagon bash
+	docker-compose run --rm plagio bash
