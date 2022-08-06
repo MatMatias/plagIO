@@ -45,16 +45,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data | { message: string }>
 ) {
-  const text = req.body;
 
   if (req.method === "POST") {
     res.status(200).json({ message: "file sent" });
   }
 
-  if (req.method === "GET") {
+  else if (req.method === "GET") {
+    const text = req.body;
     const xmlJson = await parseXML(`${testDir}/suspicious-document00001.xml`);
     const plagiarisms = getPlagiarisms(xmlJson);
-
 
     res.status(201).json({ text: text, plagiarisms: plagiarisms });
   }
