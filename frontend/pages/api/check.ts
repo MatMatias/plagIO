@@ -43,11 +43,11 @@ const testDir = path.join(process.cwd(), "test");
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data | { message: string }>
+  res: NextApiResponse<{ status: number, message: string, data?: Data }>
 ) {
 
   if (req.method === "POST") {
-    res.status(200).json({ message: "file sent" });
+    res.status(200).json({ status: 200, message: "File sent" });
   }
 
   else if (req.method === "GET") {
@@ -55,10 +55,10 @@ export default async function handler(
     const xmlJson = await parseXML(`${testDir}/suspicious-document00001.xml`);
     const plagiarisms = getPlagiarisms(xmlJson);
 
-    res.status(201).json({ text: text, plagiarisms: plagiarisms });
+    res.status(201).json({ status: 201, message: "Text and plagiarisms received", data: { text: text, plagiarisms: plagiarisms } });
   }
 
   else {
-    res.status(405).send({ message: "Only GET or POST requests allowed" })
+    res.status(405).send({ status: 405, message: "Only GET or POST requests allowed" });
   }
 }
