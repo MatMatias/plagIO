@@ -8,11 +8,11 @@ import Router from "next/router";
 const submitFile = async (file: any) => {
   const response = await fetch("/api/check", {
     method: "POST",
-    body: file
-  })
+    body: file,
+  });
 
   return response.json();
-}
+};
 
 const UploadArea = () => {
   const { file, setFile } = useContext(HomeContext);
@@ -28,12 +28,12 @@ const UploadArea = () => {
           className={getButtonStyleIfDisabled(file)}
           disabled={isFileUndefined(file)}
           onClick={async () => {
-            const { status } = await submitFile(file)
+            const { status } = await submitFile(file);
 
             if (status === 200) {
-              Router.push("/check")
+              Router.push("/check");
             } else {
-              alert(`An error ocurred\nStatus: ${status}`)
+              alert(`An error ocurred\nStatus: ${status}`);
             }
           }}
         >
