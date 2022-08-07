@@ -21,7 +21,6 @@ const Dropzone = () => {
     (fileRejections: FileRejection[]) => {
       const errorCodesSet = getErrorCodesSet(fileRejections);
       setErrorMessages(getErrorMessages(errorCodesSet));
-      console.log(fileRejections);
     },
     [setErrorMessages]
   );
@@ -37,7 +36,7 @@ const Dropzone = () => {
     onDrop,
     onDropRejected,
     accept: {
-      "text/html": [".pdf"],
+      "text/html": [".pdf", ".txt"],
     },
     maxFiles: 1,
   });

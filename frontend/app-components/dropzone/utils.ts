@@ -8,7 +8,7 @@ export function getErrorMessages(errorCodes: Set<string>): string[] {
       "Erro genérico. Abra uma issue reportando o caminho até o erro.";
     if (errorCode === "file-invalid-type") {
       errorMessage =
-        "Formato errado de arquivo. Por gentileza, selecione um arquivo com a extensão .pdf";
+        "Formato errado de arquivo. Por gentileza, selecione um arquivo com a extensão .pdf or .txt";
     }
     if (errorCode === "too-many-files") {
       errorMessage =
