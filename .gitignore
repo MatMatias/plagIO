@@ -24,3 +24,5 @@ frontend/.pnpm-debug.log*
 frontend/.env*.local
 frontend/.vercel
 frontend/*.tsbuildinfo
+
+frontend/database.db
