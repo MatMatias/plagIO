@@ -16,7 +16,9 @@ export default async function handler(
   const database = await openDb();
 
   if (req.method === "POST") {
-    await database.exec(`INSERT INTO Plagiarism (text) VALUES ("${req.body}")`);
+    const reqText = req.body.replace(/"/g, '""');
+
+    await database.exec(`INSERT INTO Plagiarism (text) VALUES ("${reqText}")`);
     res.status(200).json({ status: 200, message: "File sent" });
   } else if (req.method === "GET") {
     /*** SEND TEXT (req.body) TO THE NEURAL NET ***/
