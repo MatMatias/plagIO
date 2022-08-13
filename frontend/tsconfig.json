@@ -37,6 +37,12 @@
       ],
       "@/database/*": [
         "database/*"
+      ],
+      "@/types/*": [
+        "types/*"
+      ],
+      "@/utils/*": [
+        "utils/*"
       ]
     }
   },
