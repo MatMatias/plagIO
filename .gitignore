@@ -7,22 +7,23 @@ src/__pycache__/
 data/pkl/*
 data/skip-thoughts/*
 
-# frontend
-frontend/node_modules
-frontend/.pnp
-frontend/.pnp.js
-frontend/coverage
-frontend/.next/
-frontend/out/
-frontend/build
-frontend/.DS_Store
-frontend/*.pem
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log*
-frontend/.pnpm-debug.log*
-frontend/.env*.local
-frontend/.vercel
-frontend/*.tsbuildinfo
+# webapp
+webapp/node_modules
+webapp/.pnp
+webapp/.pnp.js
+webapp/coverage
+webapp/.next/
+webapp/out/
+webapp/build
+webapp/.DS_Store
+webapp/*.pem
+webapp/npm-debug.log*
+webapp/yarn-debug.log*
+webapp/yarn-error.log*
+webapp/.pnpm-debug.log*
+webapp/.env*.local
+webapp/.vercel
+webapp/*.tsbuildinfo
+webapp/.next
 
-frontend/database.db
+webapp/database.db
