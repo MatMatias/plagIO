@@ -1,6 +1,7 @@
 import type { Plagiarism } from "@/types/types";
 import { Header } from "@/components/index";
 import { NextPage } from "next";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "@/styles/Check.module.css";
 
@@ -26,23 +27,27 @@ const Check: NextPage = () => {
   return (
     <div className={styles.container}>
       <Header />
-      <main className={styles.firstColContainer}>
-        <h1 className="text-bold">Relatório de Varredura de plágio</h1>
+      <main className={styles.mainContainer}>
         <section className={styles.titlesContainer}>
-          <h3>
-            <span className="text-bold">Frases: </span>
-            {phrasesCounter}
-          </h3>
-          <h3>
-            <span className="text-bold">Possíveis plágios: </span>
-            {plagiarismCounter}
-          </h3>
+          <h1 className="text-bold">Relatório de Varredura de plágio</h1>
+          <div className={styles.subtitlesContainer}>
+            <h3>
+              <span className="text-bold">Frases: </span>
+              {phrasesCounter}
+            </h3>
+            <h3>
+              <span className="text-bold">Possíveis plágios: </span>
+              {plagiarismCounter}
+            </h3>
+          </div>
         </section>
         <section className={styles.textArea}>
           <article>{text}</article>
         </section>
         <div className={styles.buttonContainer}>
-          <button className="secondary-button">Inicar nova pesquisa</button>
+          <Link href="/">
+            <button className="secondary-button">Inicar nova pesquisa</button>
+          </Link>
         </div>
       </main>
     </div>
