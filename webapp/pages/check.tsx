@@ -1,5 +1,7 @@
 import type { Plagiarism } from "@/types/types";
+import { buildTextHTML } from "../utils/buildTextHtml";
 import { Header } from "@/components/index";
+import parse from "html-react-parser";
 import { NextPage } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -24,6 +26,12 @@ const Check: NextPage = () => {
   const phrasesCounter = text.split(".").length;
   const plagiarismCounter = plagiarisms.length;
 
+  let styledText = "";
+
+  if (plagiarismCounter > 0) {
+    styledText = buildTextHTML(plagiarisms, text, `${styles.plagiarizedPart}`);
+  }
+
   return (
     <div className={styles.container}>
       <Header />
@@ -42,7 +50,7 @@ const Check: NextPage = () => {
           </div>
         </section>
         <section className={styles.textArea}>
-          <article>{text}</article>
+          <article>{parse(styledText)}</article>
         </section>
         <div className={styles.buttonContainer}>
           <Link href="/">
