@@ -1,33 +1,46 @@
 import type { Plagiarism } from "@/types/types";
-import { buildTextHTML } from "../utils/buildTextHtml";
-import { Header } from "@/components/index";
-import parse from "html-react-parser";
-import { NextPage } from "next";
+
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import Router from "next/router";
+import parse from "html-react-parser";
 import styles from "@/styles/Check.module.css";
+import { Header } from "@/components/index";
+import { HomeContext } from "@/contexts/index";
+import { NextPage } from "next";
+import { buildTextHTML } from "../utils/buildTextHtml";
+import { useContext, useEffect, useState } from "react";
 
 const Check: NextPage = () => {
   const [text, setText] = useState<string>("");
   const [plagiarisms, setPlagiarisms] = useState<Plagiarism[]>([]);
+  const { file, setFile } = useContext(HomeContext);
 
   useEffect(() => {
     (async () => {
-      const response = await fetch("/api/check", {
-        method: "GET",
-      });
+      try {
+        const response = await fetch("/api/check", {
+          method: "POST",
+          body: file,
+        });
 
-      const responseJson = await response.json();
-      setText(responseJson.data.text);
-      setPlagiarisms(responseJson.data.plagiarisms);
+        const responseJson = await response.json();
+        setText(responseJson.data.text);
+        setPlagiarisms(responseJson.data.plagiarisms);
+      } catch (error) {
+        alert(`The following error ocurred: ${JSON.stringify(error)}`);
+        Router.push("/");
+      }
     })();
-  }, []);
+
+    return () => {
+      setFile(undefined);
+    };
+  }, [file, setFile]);
 
   const phrasesCounter = text.split(".").length;
   const plagiarismCounter = plagiarisms.length;
 
   let styledText = "";
-
   if (plagiarismCounter > 0) {
     styledText = buildTextHTML(plagiarisms, text, `${styles.plagiarizedPart}`);
   }
