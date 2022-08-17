@@ -1,4 +1,4 @@
-import { HomeContext } from "@/contexts/index";
+import { FileContext } from "@/contexts/index";
 import { useState } from "react";
 
 interface HomeProviderProps {
@@ -12,7 +12,7 @@ export const HomeProvider = ({ children }: HomeProviderProps) => {
   const [file, setFile] = useState<File | undefined>(undefined);
 
   return (
-    <HomeContext.Provider
+    <FileContext.Provider
       value={{
         errorMessages: errorMessages,
         file: file,
@@ -21,6 +21,6 @@ export const HomeProvider = ({ children }: HomeProviderProps) => {
       }}
     >
       {children}
-    </HomeContext.Provider>
+    </FileContext.Provider>
   );
 };

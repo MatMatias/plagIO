@@ -5,7 +5,7 @@ import Router from "next/router";
 import parse from "html-react-parser";
 import styles from "@/styles/Check.module.css";
 import { Header } from "@/components/index";
-import { HomeContext } from "@/contexts/index";
+import { FileContext } from "@/contexts/index";
 import { NextPage } from "next";
 import { buildTextHTML } from "../utils/buildTextHtml";
 import { useContext, useEffect, useState } from "react";
@@ -13,7 +13,7 @@ import { useContext, useEffect, useState } from "react";
 const Check: NextPage = () => {
   const [text, setText] = useState<string>("");
   const [plagiarisms, setPlagiarisms] = useState<Plagiarism[]>([]);
-  const { file, setFile } = useContext(HomeContext);
+  const { file, setFile } = useContext(FileContext);
 
   useEffect(() => {
     (async () => {

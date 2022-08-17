@@ -1,6 +1,6 @@
 import styles from "@/styles/Dropzone.module.css";
 import { FileRejection, useDropzone } from "react-dropzone";
-import { HomeContext } from "@/contexts/index";
+import { FileContext } from "@/contexts/index";
 import { IconContext } from "react-icons";
 import { ImFileText } from "react-icons/im";
 import { getErrorMessages, getErrorCodesSet } from "./utils";
@@ -8,7 +8,7 @@ import { useCallback, useEffect, useContext, Fragment } from "react";
 
 const Dropzone = () => {
   const { errorMessages, setErrorMessages, file, setFile } =
-    useContext(HomeContext);
+    useContext(FileContext);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
