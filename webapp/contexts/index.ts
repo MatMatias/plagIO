@@ -1,3 +1,3 @@
-import { HomeContext } from "./home-context";
+import { FileContext } from "./file-context";
 
-export { HomeContext };
+export { FileContext };

@@ -1,12 +1,12 @@
 import styles from "@/styles/UploadArea.module.css";
 import { Dropzone } from "@/app-components/index";
-import { HomeContext } from "@/contexts/index";
+import { FileContext } from "@/contexts/index";
 import { isFileUndefined, getButtonStyleIfDisabled } from "./utils";
 import { useContext, Fragment } from "react";
 import Router from "next/router";
 
 const UploadArea = () => {
-  const { file, setFile } = useContext(HomeContext);
+  const { file, setFile } = useContext(FileContext);
 
   return (
     <Fragment>

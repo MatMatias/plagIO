@@ -7,4 +7,4 @@ interface homeContextProps {
   setFile: Dispatch<File | undefined>;
 }
 
-export const HomeContext = createContext({} as homeContextProps);
+export const FileContext = createContext({} as homeContextProps);
