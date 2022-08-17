@@ -1,12 +1,12 @@
-# backend
+# pipeline
 .git
-makefile
-pancorpus/train/*
-plag_train.db
-src/__pycache__/
-data/pkl/*
-data/skip-thoughts/*
-data/
+neural_net_pipeline/makefile
+neural_net_pipeline/pancorpus/train/*
+neural_net_pipeline/plag_train.db
+neural_net_pipeline/src/__pycache__/
+neural_net_pipeline/data/pkl/*
+neural_net_pipeline/data/skip-thoughts/*
+neural_net_pipeline/data/
 
 # webapp
 webapp/node_modules
