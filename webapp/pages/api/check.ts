@@ -4,6 +4,7 @@ import { getPlagiarisms, parseXML } from "@/utils/index";
 import path from "path";
 
 type Data = {
+  text: string;
   plagiarisms: Plagiarism[];
 };
 
@@ -22,11 +23,11 @@ export default async function handler(
     res.status(201).json({
       status: 201,
       message: "Text and plagiarisms received",
-      data: { plagiarisms: plagiarisms },
+      data: { text: text, plagiarisms: plagiarisms },
     });
   } else {
     res
       .status(405)
-      .send({ status: 405, message: "Only GET or POST requests allowed" });
+      .send({ status: 405, message: "Only POST requests allowed" });
   }
 }
