@@ -108,3 +108,5 @@ $ pip install -r ./test/requirements.txt
 ```
 $ yarn test_ui
 ```
+
+Finally, in order to run selenium test, it is necessary that the application is running and Chromium-based browser is installed on your machine.
