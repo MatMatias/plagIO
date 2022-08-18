@@ -94,3 +94,17 @@ Running with yarn:
 $ yarn
 $ yarn dev
 ```
+
+### Tests
+
+#### Setup Selenium dependencies
+
+```
+$ pip install -r ./test/requirements.txt
+```
+
+#### Run Selenium test
+
+```
+$ yarn test_ui
+```
