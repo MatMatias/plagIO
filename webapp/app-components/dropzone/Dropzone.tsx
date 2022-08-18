@@ -43,7 +43,7 @@ const Dropzone = () => {
 
   return (
     <div {...getRootProps()} className={styles.container}>
-      <input {...getInputProps()} />
+      <input {...getInputProps()} id="dropzone" />
       {file ? (
         <div className={styles.dropzoneTextContainer}>
           <IconContext.Provider value={{ size: "1.5rem" }}>
