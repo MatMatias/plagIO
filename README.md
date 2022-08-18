@@ -97,13 +97,13 @@ $ yarn dev
 
 ### Tests
 
-#### Setup Selenium dependencies
+#### Setup Selenium dependencies:
 
 ```
 $ pip install -r ./test/requirements.txt
 ```
 
-#### Run Selenium test
+#### Run Selenium test:
 
 ```
 $ yarn test_ui
