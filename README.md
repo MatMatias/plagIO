@@ -1,8 +1,8 @@
 # plagIO
 
-#### English text plagiarism identifier
+English text plagiarism identifier
 
-#### https://plagio.vercel.app/
+<https://plagio.vercel.app/>
 
 This project intends to use a neural network that analyses text based on the writing style of each phrase. If a phrase's style has a certain level of difference in writing style of the text as a whole, the neural network will notify the phrase in question, warning that it might be a plagiarism. A webapp was built to consume this neural network so the users can verify plagiarism more easily.
 
@@ -26,50 +26,69 @@ This module contains pipeline to model and train the neural network. Run the fol
 
 ### Run the neural network pipeline:
 
+The commands regarding this section **must be run on the following directory**:
+
+```
+./neural_net_pipeline/
+```
+
 #### Download texts database:
 
 https://cefetrjbr.sharepoint.com/:u:/r/sites/Section_132349-G4-P5-Plagon/Documentos%20Compartilhados/G4-P5-Plagon/pan11-train.tar.gz?csf=1&web=1&e=jHtfTH
 
-#### extract the downloaded files on the following directory:
+#### extract the train directory on the following directory:
 
 ```
-neural_net_pipeline/pancorpus/train/
+./pancorpus/
 ```
 
-#### Build container:
+The train directory will store texts that will be used for the neural network training.
+
+#### Build and Run:
+
+[docker](https://docs.docker.com/engine/) and [docker-compose](https://docs.docker.com/compose/) are needed to execute the following steps of this section. To see exactly what each of these commands do, check makefile (open it with any text editor).
+
+##### Get skipthoughts files:
+
+Donwload necessary skipthoughts file to genrate stvecs:
+
+```
+$ mkdir -p ./data/skipthoughts ./data/pkl
+$ cd ./data/skipthoughts
+$ wget http://www.cs.toronto.edu/~rkiros/models/dictionary.txt http://www.cs.toronto.edu/~rkiros/models/utable.npy http://www.cs.toronto.edu/~rkiros/models/btable.npy http://www.cs.toronto.edu/~rkiros/models/uni_skip.npz http://www.cs.toronto.edu/~rkiros/models/uni_skip.npz.pkl http://www.cs.toronto.edu/~rkiros/models/bi_skip.npz http://www.cs.toronto.edu/~rkiros/models/bi_skip.npz.pkl
+$ cd ../..
+```
+
+##### Build container:
+
+Builds the docker container.
 
 ```
 $ make build
 ```
 
-#### Run container:
+##### Run container:
+
+Runs docker-compose.
 
 ```
 $ make dev
 ```
 
-#### Create sqlite3 database with the downloaded texts:
+#### Run scripts
+
+The following scripts must be run inside the container. To run it, check the previous section.
+
+##### Create sqlite3 database with the downloaded texts:
 
 ```
-$ python neural_network_pipeline/src/gen_pandb_train.py --srcdir neural_network_pipeline/pancorpus/train --destfile ./plag_train.db
+$ python ./src/gen_pandb_train.py --srcdir ./pancorpus/train --destfile ./plag_train.db
 ```
 
-#### Create skipthoughts model:
+##### Create skipthoughts model:
 
 ```
-$ python ./src/create_st_model.py --pandb plag_train.db --stdir ./data/skip-thoughts/ --destdir ./data/pkl --vocab ./data/skip-thoughts/dictionary.txt --start 1
-```
-
-#### Generate metadata:
-
-```
-$ python ./src/gen_metadata.py
-```
-
-#### Generate tuples:
-
-```
-$ python ./src/gen_tuples.py --destdir ./data/tuples
+$ python ./src/create_st_model.py --pandb plag_train.db --stdir ./data/skipthoughts/ --destdir ./data/pkl --vocab ./data/skipthoughts/dictionary.txt --start 0
 ```
 
 ## Webapp
@@ -105,8 +124,8 @@ $ pip install -r ./test/requirements.txt
 
 #### Run Selenium test:
 
+To run this test the application must me running and a Chromium-based browser must be installed on your machine
+
 ```
 $ yarn test_ui
 ```
-
-Finally, in order to run selenium test, it is necessary that the application is running and Chromium-based browser is installed on your machine.
