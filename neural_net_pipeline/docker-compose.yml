@@ -1,5 +1,5 @@
 services:
-  plagon:
+  plagio:
     build:
       dockerfile: Dockerfile
       context: .
@@ -7,4 +7,3 @@ services:
     stdin_open: true
     volumes:
       - ./:/app
-    

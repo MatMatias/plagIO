@@ -1,17 +1,10 @@
-FROM bitnami/pytorch:latest
+FROM python:3.7.2
+LABEL authors="SamuraX <https://github.com/MatMatias>"
 USER root
 WORKDIR /app
 COPY ./ ./
 
-RUN apt-get update
-RUN apt-get -y install sqlite3
-RUN apt-get -y install wget 
-RUN pip install nltk
-RUN pip install skipthoughts
-RUN pip install tensorflow==1.13.2
-RUN pip install numpy scipy matplotlib ipython jupyter pandas sympy nose 
+# install necessary python dependecies
+RUN pip install nltk skipthoughts certifi==2022.5.18.1 tensorflow==1.13.2 numpy scipy matplotlib ipython jupyter pandas sympy nose torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+# install punkt training model
 RUN python -m nltk.downloader punkt
-RUN mkdir -p data/skip-thoughts && cd data/skip-thoughts/ 
-RUN wget http://www.cs.toronto.edu/~rkiros/models/dictionary.txt http://www.cs.toronto.edu/~rkiros/models/utable.npy http://www.cs.toronto.edu/~rkiros/models/btable.npy http://www.cs.toronto.edu/~rkiros/models/uni_skip.npz http://www.cs.toronto.edu/~rkiros/models/uni_skip.npz.pkl http://www.cs.toronto.edu/~rkiros/models/bi_skip.npz http://www.cs.toronto.edu/~rkiros/models/bi_skip.npz.pkl
-RUN cd ../..
-RUN mkdir data/tuples
