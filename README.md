@@ -8,7 +8,9 @@ This project intends to use a neural network that analyses text based on the wri
 
 ## Architecture
 
-There are two modules on this project: the neural network pipeline and the webapp.
+There are two modules on this project: the neural network pipeline and the webapp:
+
+![technology_diagram_not_found](./docs/technology_diagram.png)
 
 ## Neural network pipeline (WORK IN PROGRESS)
 
